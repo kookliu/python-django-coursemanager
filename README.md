@@ -16,7 +16,7 @@ The system provides the following functionality:
 ## Technical Overview
 
 * Developed using Django with lightweight UI based on Admin interface.
-* Scalable with variouse backend databases.
+* Scalable with various backend databases.
 * Customisable, skinnable.
 
 ## Status
