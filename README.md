@@ -29,8 +29,14 @@ In development.
 python -m venv venv
 source ./venv/bin/activate
 
-# Update pip 
+pip install --upgrade pip
+
 pip install django
+pip install --upgrade selenium
+
+# TODO: Download the latest gecko driver and copy insto Venv/bin
+# (automate) wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
+# (automate) | tar -xz > ./venv/bin 
 
 # Create database (SQLite)
 python manage.py migrate
@@ -40,4 +46,7 @@ python manage.py migrate
 
 # Create superuser
 python manage.py createsuperuser
+
+# Run Tests
+python manage.py test
 ```
