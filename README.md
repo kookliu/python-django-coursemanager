@@ -22,3 +22,21 @@ The system provides the following functionality:
 ## Status
 
 In development. 
+
+## Setup
+``` bash
+python -m venv venv
+source ./venv/bin/activate
+
+# Update pip 
+pip install django
+
+# Create database (SQLite)
+python manage.py migrate
+python manage.py makemigrations coursemanager
+python manage.py sqlmigrate coursemanager 0001
+python manage.py migrate
+
+# Create superuser
+python manage.py createsuperuser
+```
