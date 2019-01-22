@@ -46,7 +46,7 @@ class Course(models.Model):
 
 
 class CourseMaterial(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
     title = models.CharField(max_length=125)
     description = models.CharField(max_length=512, null=True, blank=True)
     reference = models.URLField()
@@ -56,12 +56,12 @@ class CourseMaterial(models.Model):
 
 
 class Presentation(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
     startdate = models.DateField()
     starttime = models.TimeField()
     status = models.CharField(max_length=1, choices=PRESENTATIONSTATUS, default='P')
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.PROTECT)
+    trainer = models.ForeignKey(Trainer, on_delete=models.PROTECT)
 
     def __unicode__(self):
         return u'%s:%s' % (self.course, self.startdate)
@@ -79,7 +79,7 @@ class Presentation(models.Model):
 
 
 class Attendee(models.Model):
-    presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
+    presentation = models.ForeignKey(Presentation, on_delete=models.PROTECT)
     emailaddress = models.EmailField()
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
