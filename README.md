@@ -12,6 +12,7 @@ The system provides the following functionality:
 * Easy to use booking and scheduling of courses.
 * Printable trainer diaries and delegate reports.
 * Trainer / Training management reports.
+* Automate delegate communication.
 
 ## Technical Overview
 
