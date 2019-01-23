@@ -34,7 +34,7 @@ class EnvironmentAdmin(admin.ModelAdmin):
     list_display = ('name','description','reference')
     
 class CostCodeAdmin(admin.ModelAdmin):
-     list_display = ()
+     list_display = ('code', 'title')
 
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('sortorder','name', 'description')
