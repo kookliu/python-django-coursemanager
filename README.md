@@ -49,4 +49,10 @@ python manage.py createsuperuser
 
 # Run Tests
 python manage.py test
+
+# Loading Fixtures
+python manage.py loaddata
+
+# Dumping dummy users to fixture file
+python manage.py dumpdata auth.User --indent 4 > users.json
 ```
