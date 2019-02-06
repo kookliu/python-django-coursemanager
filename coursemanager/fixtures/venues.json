@@ -1,0 +1,22 @@
+[
+{
+    "model": "coursemanager.venue",
+    "pk": 1,
+    "fields": {
+        "address": "Training HQ\r\n123 Baker Street\r\nLondon",
+        "room": "Training 1",
+        "maxdelegates": 10,
+        "notes": "Entrance code 1234"
+    }
+},
+{
+    "model": "coursemanager.venue",
+    "pk": 2,
+    "fields": {
+        "address": "Training HQ\r\n123 Baker Street\r\nLondon",
+        "room": "Training 2",
+        "maxdelegates": 6,
+        "notes": "Suitable for small Video Conference."
+    }
+}
+]

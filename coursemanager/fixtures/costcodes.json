@@ -1,0 +1,34 @@
+[
+{
+    "model": "coursemanager.costcode",
+    "pk": 1,
+    "fields": {
+        "code": "T0001",
+        "title": "Sales - Training"
+    }
+},
+{
+    "model": "coursemanager.costcode",
+    "pk": 2,
+    "fields": {
+        "code": "T0002",
+        "title": "Engineering Training"
+    }
+},
+{
+    "model": "coursemanager.costcode",
+    "pk": 3,
+    "fields": {
+        "code": "T0003",
+        "title": "Technology Training"
+    }
+},
+{
+    "model": "coursemanager.costcode",
+    "pk": 4,
+    "fields": {
+        "code": "T0004",
+        "title": "Head Office Training"
+    }
+}
+]

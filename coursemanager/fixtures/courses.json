@@ -1,0 +1,123 @@
+[
+{
+    "model": "coursemanager.course",
+    "pk": 1,
+    "fields": {
+        "title": "Office 365 Excel - Introduction",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 4,
+        "max_attendees": 10
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 2,
+    "fields": {
+        "title": "Office 365 Excel - Intermediate",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 4,
+        "max_attendees": 10
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 3,
+    "fields": {
+        "title": "Office 365 Excel - Advanced",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 4,
+        "max_attendees": 6
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 4,
+    "fields": {
+        "title": "Office 365 Word - Introduction",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 3,
+        "max_attendees": 10
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 5,
+    "fields": {
+        "title": "Office 365 Word - Intermediate",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 3,
+        "max_attendees": 10
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 6,
+    "fields": {
+        "title": "Office 365 Word - Advanced",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 3,
+        "max_attendees": 6
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 7,
+    "fields": {
+        "title": "Office 365 Powerpoint - Introduction",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 3,
+        "max_attendees": 10
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 8,
+    "fields": {
+        "title": "Office 365 Powerpoint - Advanced",
+        "duration": 1.0,
+        "cost": 400.0,
+        "min_attendees": 3,
+        "max_attendees": 10
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 9,
+    "fields": {
+        "title": "Office 365 Access - Introduction",
+        "duration": 1.0,
+        "cost": 500.0,
+        "min_attendees": 3,
+        "max_attendees": 8
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 10,
+    "fields": {
+        "title": "Office 365 Access - Intermediate",
+        "duration": 1.0,
+        "cost": 500.0,
+        "min_attendees": 3,
+        "max_attendees": 6
+    }
+},
+{
+    "model": "coursemanager.course",
+    "pk": 11,
+    "fields": {
+        "title": "Office 365 Access - Advanced",
+        "duration": 1.0,
+        "cost": 600.0,
+        "min_attendees": 3,
+        "max_attendees": 6
+    }
+}
+]

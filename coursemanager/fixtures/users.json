@@ -1,0 +1,20 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$120000$MeKTy808XNJl$19sAgS+yS/upPwaOjSYeHO5jBgj2DdpT/cQFSfeVQJs=",
+        "last_login": "2019-01-22T16:28:51.634Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "boylesa@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-01-22T01:08:17.198Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

@@ -1,0 +1,22 @@
+[
+{
+    "model": "coursemanager.trainer",
+    "pk": 1,
+    "fields": {
+        "emailaddress": "trainer1@training.co.local",
+        "firstname": "Timmy",
+        "lastname": "Trainer",
+        "extension": "1234"
+    }
+},
+{
+    "model": "coursemanager.trainer",
+    "pk": 2,
+    "fields": {
+        "emailaddress": "trainer2@training.co.local",
+        "firstname": "Tina",
+        "lastname": "Trainer",
+        "extension": "9876"
+    }
+}
+]
