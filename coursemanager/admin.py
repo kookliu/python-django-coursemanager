@@ -39,8 +39,17 @@ class PresentationAdminForm(forms.ModelForm):
 
 
 class PresentationAdmin(admin.ModelAdmin):
-    list_display = ('course', 'startdate', 'starttime', 'status', 'venue', 'trainer', 'num_attendees')
+    list_display = ('get_course', 'startdate', 'starttime', 'status', 'get_venue', 'get_trainer', 'num_attendees')
     list_filter = ['startdate', 'status']
+
+    def get_course(self, obj):
+        return obj.course.title
+
+    def get_venue(self, obj):
+        return obj.venue.address
+
+    def get_trainer(self, obj):
+        return obj.trainer.emailaddress
 
     form = PresentationAdminForm
     # inlines = [AttendeeInline]
