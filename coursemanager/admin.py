@@ -37,10 +37,18 @@ class PresentationAdminForm(forms.ModelForm):
         self.fields['trainer'].choices = TRAINERS
         self.fields['venue'].choices = VENUES
 
+def open_presentation(modelAdmin, request, queryset):
+    for presentation in queryset:
+        presentation.status = 'O'
+        presentation.save()
+
+open_presentation.short_description = 'Open Presentation'
 
 class PresentationAdmin(admin.ModelAdmin):
     list_display = ('get_course', 'startdate', 'starttime', 'status', 'get_venue', 'get_trainer', 'num_attendees')
+    # list_filter = ['startdate', 'status', 'trainer']
     list_filter = ['startdate', 'status']
+    actions = [open_presentation, ]
 
     def get_course(self, obj):
         return obj.course.title
@@ -52,11 +60,17 @@ class PresentationAdmin(admin.ModelAdmin):
         return obj.trainer.emailaddress
 
     form = PresentationAdminForm
-    # inlines = [AttendeeInline]
+    inlines = [AttendeeInline]
 
 class AttendeeAdmin(admin.ModelAdmin):
-    list_display = ('emailaddress', 'presentation', 'firstname', 'lastname', 'extension', 'attendancestatus')
+    list_display = ('emailaddress', 'course', 'start_date', 'firstname', 'lastname', 'extension', 'attendancestatus')
     search_fields = ('emailaddress', 'firstname', 'lastname')
+
+    def course(self, obj):
+        return obj.presentation.course.title
+
+    def start_date(self, obj):
+        return obj.presentation.startdate
 
 class TrainerAdmin(admin.ModelAdmin):
     list_display = ('emailaddress', 'firstname', 'lastname','extension')
