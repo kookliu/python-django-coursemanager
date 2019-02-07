@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from coursemanager.models import Course, Venue, Presentation, Attendee, Trainer, CostCode, Environment, CourseMaterial, Report
 
 class CourseMaterialInline(admin.StackedInline):
@@ -45,7 +46,7 @@ def open_presentation(modelAdmin, request, queryset):
 open_presentation.short_description = 'Open Presentation'
 
 class PresentationAdmin(admin.ModelAdmin):
-    list_display = ('get_course', 'startdate', 'starttime', 'status', 'get_venue', 'get_trainer', 'num_attendees')
+    list_display = ('get_course', 'startdate', 'starttime', 'status', 'get_venue', 'get_trainer', 'num_attendees', 'viable')
     # list_filter = ['startdate', 'status', 'trainer']
     list_filter = ['startdate', 'status']
     actions = [open_presentation, ]
@@ -58,6 +59,11 @@ class PresentationAdmin(admin.ModelAdmin):
 
     def get_trainer(self, obj):
         return obj.trainer.emailaddress
+
+    def viable(self, obj):
+        return mark_safe(obj.attendee_check())
+
+    viable.short_description = 'Course viability'
 
     form = PresentationAdminForm
     inlines = [AttendeeInline]
