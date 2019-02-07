@@ -1,96 +1,76 @@
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver.firefox.webdriver import WebDriver
-
-class LoginTests(StaticLiveServerTestCase):
-    fixtures = ['users.json']
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super().tearDownClass()
-
-    def test_login(self):
-        """ It is possible to login using the set username and password """
-        self.selenium.get('%s%s' % (self.live_server_url, '/admin/login'))
-        username_input = self.selenium.find_element_by_name("username")
-        username_input.send_keys('admin')
-        password_input = self.selenium.find_element_by_name("password")
-        password_input.send_keys('password')
-        self.selenium.find_element_by_xpath('//input[@value="Log in"]').click()
-        self.selenium.implicitly_wait(1000)
-
-        self.selenium.save_screenshot('LoginTests.png')
-
-        # Post login asserts
-        self.assertTrue(self.selenium.find_element_by_xpath('/html/body/div[1]/div[2]/h1').text, 'Site administration')
+# -*- coding: utf-8 -*-
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+import unittest, time, re
 
 
-class CourseLoadTests(StaticLiveServerTestCase):
-    """ The courses have been correctly loaded from the fixtures"""
-    fixtures = ['users.json', 'courses.json']
+class Login(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        self.driver.implicitly_wait(5)
+        self.base_url = "http://localhost:8000/admin/login"
+        self.verificationErrors = []
+        self.accept_next_alert = True
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
+    def test_valid_login(self):
+        """
+        Logging into the application with a valid username and password should
+        present the default admin dashboard with the Coursemanager application displayed.
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super().tearDownClass()
+        :return:
+        """
+        driver = self.driver
+        driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        driver.find_element_by_id("id_username").click()
+        driver.find_element_by_id("id_username").clear()
+        driver.find_element_by_id("id_username").send_keys("admin")
+        driver.find_element_by_id("id_password").clear()
+        driver.find_element_by_id("id_password").send_keys("password")
+        driver.find_element_by_xpath(
+            "(.//*[normalize-space(text()) and normalize-space(.)='Password:'])[1]/following::input[3]").click()
 
-    def test_course_load_count(self):
-        """The total number of courses loaded using the test dataset should be 11"""
-        self.selenium.get('%s%s' % (self.live_server_url, '/admin/login'))
-        username_input = self.selenium.find_element_by_name("username")
-        username_input.send_keys('admin')
-        password_input = self.selenium.find_element_by_name("password")
-        password_input.send_keys('password')
-        self.selenium.find_element_by_xpath('//input[@value="Log in"]').click()
-        self.selenium.implicitly_wait(1000)
+        self.assertTrue(self.is_element_present(By.LINK_TEXT, "COURSEMANAGER"))
+        driver.find_element(By.LINK_TEXT, "LOG OUT").click()
 
-        # Courses
-        self.selenium.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[3]/th/a').click()
-        self.selenium.save_screenshot('CourseLoadTests_test_login.png')
+    def test_invalid_login(self):
+        """
+        Logging into the application with an INVALID username and password should
+        display an error message.
 
-        total_courses = self.selenium.find_element_by_xpath('/html/body/div[1]/div[3]/div/div/form/p').text
-        self.assertTrue(total_courses == '11 courses')
+        :return:
+        """
+        driver = self.driver
+        driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        driver.find_element_by_id("id_username").click()
+        driver.find_element_by_id("id_username").clear()
+        driver.find_element_by_id("id_username").send_keys("admin")
+        driver.find_element_by_id("id_password").clear()
+        driver.find_element_by_id("id_password").send_keys("wrongpassword")
 
-class AddPresentation(StaticLiveServerTestCase):
+        driver.find_element_by_xpath(
+            "(.//*[normalize-space(text()) and normalize-space(.)='Password:'])[1]/following::input[3]").click()
 
-    # fixtures = ['users.json', 'courses.json']
+        errordiv = driver.find_element_by_class_name("errornote")
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
+        driver.save_screenshot('invalid_login.png')
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super().tearDownClass()
+        self.assertTrue("enter the correct username and password" in errordiv.text)
 
-    def test_course_load_count(self):
-        """The total number of courses loaded using the test dataset should be 11"""
-        self.selenium.get('%s%s' % (self.live_server_url, '/admin/login'))
-        username_input = self.selenium.find_element_by_name("username")
-        username_input.send_keys('admin')
-        password_input = self.selenium.find_element_by_name("password")
-        password_input.send_keys('password')
-        self.selenium.find_element_by_xpath('//input[@value="Log in"]').click()
-        self.selenium.implicitly_wait(1000)
+    def is_element_present(self, how, what):
+        try:
+            self.driver.find_element(by=how, value=what)
+        except NoSuchElementException as e:
+            return False
+        return True
 
-        # Courses
-        self.selenium.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[3]/th/a').click()
-        self.selenium.save_screenshot('CourseLoadTests_test_login.png')
+    def tearDown(self):
+        self.driver.quit()
+        self.assertEqual([], self.verificationErrors)
 
-        total_courses = self.selenium.find_element_by_xpath('/html/body/div[1]/div[3]/div/div/form/p').text
-        self.assertTrue(total_courses == '11 courses')
+
+if __name__ == "__main__":
+    unittest.main()
