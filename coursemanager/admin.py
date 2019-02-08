@@ -100,4 +100,5 @@ admin.site.register(Environment, EnvironmentAdmin)
 admin.site.register(CostCode, CostCodeAdmin)
 admin.site.register(Report, ReportAdmin)
 
+admin.site.site_header = 'Coursemanager TMS'
 
