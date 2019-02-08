@@ -69,6 +69,9 @@ class Presentation(models.Model):
     def __unicode__(self):
         return u'%s:%s' % (self.course, self.startdate)
 
+    def __str__(self):
+        return u'%s:%s' % (self.course, self.startdate)
+
     def num_attendees(self):
         return Attendee.objects.filter(presentation=self.id).count()
     
