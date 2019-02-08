@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% load footer %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+    .admin-appicon-auth:before {
+        font-family: FontAwesome;
+        content: "\f024";
+    }
+ </style>
+ {% endblock %}
+
+{% block footer %}
+{% admin_footer %}
+{% endblock %}

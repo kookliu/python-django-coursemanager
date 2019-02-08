@@ -27,6 +27,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+####
+# Installed by sb as part of django admin footer evaluation
+from datetime import datetime
+version = '0.1'
+
+ADMIN_FOOTER_DATA = {
+  'site_url': 'https://www.coursemanager.local',
+  'site_name': 'Coursemanager',
+  'period': '{}'.format(datetime.now().year),
+  'version': 'v{} - '.format(version)
+}
+######
 
 # Application definition
 
@@ -37,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'admin_footer',
     'coursemanager',
 ]
 
@@ -55,7 +68,7 @@ ROOT_URLCONF = 'coursemanager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['coursemanager/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
