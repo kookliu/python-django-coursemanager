@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest
 
 
-class Login(unittest.TestCase):
+class Login(LiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(5)
@@ -18,10 +16,8 @@ class Login(unittest.TestCase):
 
     def test_valid_login(self):
         """
-        Logging into the application with a valid username and password should
+        Logging into the application with a VALID username and password should
         present the default admin dashboard with the Coursemanager application displayed.
-
-        :return:
         """
         driver = self.driver
         driver.get("http://localhost:8000/admin/login/?next=/admin/")
@@ -40,8 +36,6 @@ class Login(unittest.TestCase):
         """
         Logging into the application with an INVALID username and password should
         display an error message.
-
-        :return:
         """
         driver = self.driver
         driver.get("http://localhost:8000/admin/login/?next=/admin/")
