@@ -20,7 +20,7 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ('title','duration','cost','min_attendees', 'max_attendees')
 
     inlines = [CourseMaterialInline]
-     
+
 class VenueAdmin(admin.ModelAdmin):
     list_display = ('room', 'maxdelegates')
     
@@ -101,4 +101,5 @@ admin.site.register(CostCode, CostCodeAdmin)
 admin.site.register(Report, ReportAdmin)
 
 admin.site.site_header = 'Coursemanager TMS'
+admin.site.site_title = 'Coursemanager TMS'
 
