@@ -93,6 +93,9 @@ class Attendee(models.Model):
     def __unicode__(self):
         return u'%s' % self.emailaddress
 
+    def __str__(self):
+        return u'%s' % self.emailaddress
+
 
 class CostCode(models.Model):
     code = models.CharField(max_length=10, unique=True)
