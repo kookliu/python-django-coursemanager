@@ -44,6 +44,9 @@ class Course(models.Model):
     def __unicode__(self):
         return u'%s' % self.title
 
+    def __str__(self):
+        return self.title
+
 
 class CourseMaterial(models.Model):
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
