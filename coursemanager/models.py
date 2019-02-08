@@ -23,6 +23,9 @@ class Trainer(models.Model):
     def __unicode__(self):
         return u'%s' % self.emailaddress
 
+    def __str__(self):
+        return u'%s' % self.emailaddress
+
 
 class Venue(models.Model):
     address = models.TextField()
