@@ -3,6 +3,10 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from coursemanager.models import Course, Venue, Presentation, Attendee, Trainer, CostCode, Environment, CourseMaterial, Report
 
+from django_admin_listfilter_dropdown.filters import (
+    DropdownFilter, ChoiceDropdownFilter, RelatedDropdownFilter, RelatedOnlyDropdownFilter, AllValuesFieldListFilter
+)
+
 class CourseMaterialInline(admin.StackedInline):
     model = CourseMaterial
     extra = 1
@@ -35,7 +39,7 @@ class PresentationAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PresentationAdminForm, self).__init__(*args, **kwargs)
         self.fields['course'].choices=COURSES
-        self.fields['trainer'].choices = TRAINERS
+        # self.fields['trainer'].choices = TRAINERS
         self.fields['venue'].choices = VENUES
 
 def open_presentation(modelAdmin, request, queryset):
@@ -46,19 +50,15 @@ def open_presentation(modelAdmin, request, queryset):
 open_presentation.short_description = 'Open Presentation'
 
 class PresentationAdmin(admin.ModelAdmin):
-    list_display = ('get_course', 'startdate', 'starttime', 'status', 'get_venue', 'get_trainer', 'num_attendees', 'viable')
-    # list_filter = ['startdate', 'status', 'trainer']
-    list_filter = ['startdate', 'status']
+    list_display = ('course', 'startdate', 'starttime', 'status', 'venue', 'num_attendees', 'viable', 'trainer')
+
+    list_filter = ['startdate',
+                   ('status', ChoiceDropdownFilter),
+                   ('course', RelatedDropdownFilter),
+                   ('trainer', RelatedDropdownFilter),
+                   ]
+
     actions = [open_presentation, ]
-
-    def get_course(self, obj):
-        return obj.course.title
-
-    def get_venue(self, obj):
-        return obj.venue.address
-
-    def get_trainer(self, obj):
-        return obj.trainer.emailaddress
 
     def viable(self, obj):
         return mark_safe(obj.attendee_check())

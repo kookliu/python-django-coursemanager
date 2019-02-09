@@ -15,7 +15,7 @@ PRESENTATIONSTATUS = (("P","PROVISIONAL"),
 
 
 class Trainer(models.Model):
-    emailaddress = models.EmailField()
+    emailaddress = models.EmailField(unique=True)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     extension = models.CharField(max_length=15)
@@ -24,17 +24,20 @@ class Trainer(models.Model):
         return u'%s' % self.emailaddress
 
     def __str__(self):
-        return u'%s' % self.emailaddress
+        return self.emailaddress
 
 
 class Venue(models.Model):
+    room = models.CharField(max_length=50, unique=True)
     address = models.TextField()
-    room = models.CharField(max_length=50)
     maxdelegates = models.IntegerField()
     notes = models.TextField()
 
     def __unicode__(self):
         return u'%s' % self.room
+
+    def __str__(self):
+        return self.room
 
 
 class Course(models.Model):
