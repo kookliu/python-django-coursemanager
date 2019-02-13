@@ -3,10 +3,24 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from coursemanager.models import Course, Venue, Presentation, Attendee, Trainer, CostCode, Environment, CourseMaterial, Report
 
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin, ExportMixin
 from django_admin_listfilter_dropdown.filters import (
     DropdownFilter, ChoiceDropdownFilter, RelatedDropdownFilter, RelatedOnlyDropdownFilter, AllValuesFieldListFilter
 )
 
+###
+# Import Export resources
+#####
+class PresentationResource(resources.ModelResource):
+
+    class Meta:
+        model = Presentation
+        fields = ('course__title', 'startdate', 'starttime', 'trainer__emailaddress', 'venue__room', 'status', 'num_attendees')
+
+###
+# Admin forms
+####
 class CourseMaterialInline(admin.StackedInline):
     model = CourseMaterial
     extra = 1
@@ -42,23 +56,18 @@ class PresentationAdminForm(forms.ModelForm):
         # self.fields['trainer'].choices = TRAINERS
         self.fields['venue'].choices = VENUES
 
-def open_presentation(modelAdmin, request, queryset):
-    for presentation in queryset:
-        presentation.status = 'O'
-        presentation.save()
 
-open_presentation.short_description = 'Open Presentation'
-
-class PresentationAdmin(admin.ModelAdmin):
+class PresentationAdmin(ImportExportModelAdmin):
     list_display = ('course', 'startdate', 'starttime', 'status', 'venue', 'num_attendees', 'viable', 'trainer')
 
     list_filter = ['startdate',
                    ('status', ChoiceDropdownFilter),
                    ('course', RelatedDropdownFilter),
-                   ('trainer', RelatedDropdownFilter),
+                   ('trainer', RelatedDropdownFilter)
                    ]
+    actions = []
 
-    actions = [open_presentation, ]
+    resource_class = PresentationResource
 
     def viable(self, obj):
         return mark_safe(obj.attendee_check())

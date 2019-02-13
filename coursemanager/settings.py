@@ -43,15 +43,16 @@ ADMIN_FOOTER_DATA = {
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_footer',
+    'coursemanager',
+    'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_admin_listfilter_dropdown',
-    'admin_footer',
-    'coursemanager',
+    'django_admin_listfilter_dropdown'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +70,7 @@ ROOT_URLCONF = 'coursemanager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['coursemanager/templates'],
+        'DIRS': ['coursemanager/templates', 'coursemanager/templates/admin'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -36,6 +36,7 @@ pip install --upgrade selenium
 
 # Django additional utilities
 pip install django-admin-list-filter-dropdown
+pip install django-import-export
 
 # TODO: Download the latest gecko driver and copy insto Venv/bin
 # (automate) wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
