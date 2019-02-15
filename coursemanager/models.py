@@ -1,4 +1,5 @@
 from django.db import models
+from coursemanager.utils.datefunctions import get_week, get_month
 
 ATTENDANCESTATUS = (
                     ("A","ABSENT"),
@@ -19,7 +20,53 @@ class Trainer(models.Model):
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     extension = models.CharField(max_length=15)
-    
+
+    @property
+    def trd_week(self):
+        period = get_week()
+        qs = Presentation.objects.select_related('trainer').filter(
+            trainer = self,
+            startdate__gte = period[0],
+            startdate__lte = period[1]
+        )
+        d = sum([q.course.duration for q in qs])
+        return d
+
+    @property
+    def trd_month(self):
+        period = get_month()
+        qs = Presentation.objects.select_related('trainer').filter(
+            trainer=self,
+            startdate__gte=period[0],
+            startdate__lte=period[1]
+        )
+        d = sum([q.course.duration for q in qs])
+        return d
+
+    @property
+    def ded_week(self):
+        period = get_week()
+        qs = Presentation.objects.select_related('trainer').filter(
+            trainer=self,
+            startdate__gte=period[0],
+            startdate__lte=period[1]
+        )
+
+        d = sum([q.num_attendees() * q.course.duration for q in qs])
+        return d
+
+    @property
+    def ded_month(self):
+        period = get_month()
+        qs = Presentation.objects.select_related('trainer').filter(
+            trainer=self,
+            startdate__gte=period[0],
+            startdate__lte=period[1]
+        )
+
+        d = sum([q.num_attendees() * q.course.duration for q in qs])
+        return d
+
     def __unicode__(self):
         return u'%s' % self.emailaddress
 

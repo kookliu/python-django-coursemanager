@@ -88,7 +88,9 @@ class AttendeeAdmin(admin.ModelAdmin):
         return obj.presentation.startdate
 
 class TrainerAdmin(admin.ModelAdmin):
-    list_display = ('emailaddress', 'firstname', 'lastname','extension')
+    list_display = ('emailaddress', 'firstname', 'lastname','extension',
+                    'trd_week', 'trd_month',
+                    'ded_week', 'ded_month')
     
 class EnvironmentAdmin(admin.ModelAdmin):
     list_display = ('name','description','reference')
@@ -107,7 +109,7 @@ admin.site.register(Attendee, AttendeeAdmin)
 admin.site.register(Trainer, TrainerAdmin)
 admin.site.register(Environment, EnvironmentAdmin)
 admin.site.register(CostCode, CostCodeAdmin)
-admin.site.register(Report, ReportAdmin)
+# admin.site.register(Report, ReportAdmin)
 
 admin.site.site_header = 'Coursemanager TMS'
 admin.site.site_title = 'Coursemanager TMS'
