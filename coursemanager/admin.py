@@ -1,13 +1,16 @@
 from django import forms
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from coursemanager.models import Course, Venue, Presentation, Attendee, Trainer, CostCode, Environment, CourseMaterial, Report
+from coursemanager.models import Course, Venue, Presentation, Attendee, Trainer, CostCode, Environment, \
+    CourseMaterial, PRESENTATIONSTATUS
 
+import import_export
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ExportMixin
 from django_admin_listfilter_dropdown.filters import (
     DropdownFilter, ChoiceDropdownFilter, RelatedDropdownFilter, RelatedOnlyDropdownFilter, AllValuesFieldListFilter
 )
+
 
 ###
 # Import Export resources
@@ -16,7 +19,10 @@ class PresentationResource(resources.ModelResource):
 
     class Meta:
         model = Presentation
-        fields = ('course__title', 'startdate', 'starttime', 'trainer__emailaddress', 'venue__room', 'status', 'num_attendees')
+
+        fields = ['course__title', 'startdate', 'starttime', 'trainer__emailaddress',
+                'venue__room', 'num_attendees', 'status']
+
 
 ###
 # Admin forms
@@ -57,7 +63,7 @@ class PresentationAdminForm(forms.ModelForm):
         self.fields['venue'].choices = VENUES
 
 
-class PresentationAdmin(ImportExportModelAdmin):
+class PresentationAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ('course', 'startdate', 'starttime', 'status', 'venue', 'num_attendees', 'viable', 'trainer')
 
     list_filter = ['startdate',
